@@ -50,24 +50,38 @@ class ViewController: UIViewController
     @IBOutlet weak var box35: UIImageView!
     
     var labels = [UIImageView]()
+    var bombArray = Array(repeating: Array(repeating: false, count: 6), count: 6)
     
     func rand(lim : Int) -> Int
     {
         return Int(arc4random_uniform(UInt32(lim)))
     }
     
+    func vicinity(theLabel : UIImageView) -> Int
+    {
+        return 000000000000000000000000000000000
+    }
+    
     func clicked (theLabel : UIImageView)
     {
-        if theLabel == toggleButton
+        let pic = theLabel.image!
+        if pic==#imageLiteral(resourceName: "toggleFlag")
         {
-            switch toggleButton.image!
-            {
-            case #imageLiteral(resourceName: "togglePress"):
-                toggleButton.image = #imageLiteral(resourceName: "toggleFlag")
-            default:
-                toggleButton.image = #imageLiteral(resourceName: "togglePress")
-            }
+            toggleButton.image = #imageLiteral(resourceName: "togglePress")
         }
+        else if pic==#imageLiteral(resourceName: "togglePress")
+        {
+            toggleButton.image = #imageLiteral(resourceName: "toggleFlag")
+        }
+        else if pic==#imageLiteral(resourceName: "num1") || pic==#imageLiteral(resourceName: "num3") || pic==#imageLiteral(resourceName: "num3") || pic==#imageLiteral(resourceName: "num4") || pic==#imageLiteral(resourceName: "num5") || pic==#imageLiteral(resourceName: "num6") || pic==#imageLiteral(resourceName: "flag") || pic==#imageLiteral(resourceName: "bomb")
+        {
+            return
+        }
+        else if pic==#imageLiteral(resourceName: "blank")
+        {
+            return//do vicinity search and bomb array check
+        }
+
     }
     
     override func viewDidLoad()
@@ -79,6 +93,23 @@ class ViewController: UIViewController
             label.image = #imageLiteral(resourceName: "blank")
         }
         toggleButton.image = #imageLiteral(resourceName: "togglePress")
+        for row in 0..<6
+        {
+            for col in 0..<6
+            {
+                let randomNum = rand(lim: 5)
+                if randomNum == 4
+                {
+                    bombArray[row][col] = (true)
+                }
+                else
+                {
+                    bombArray[row][col] = (false)
+                }
+            }
+            
+        }
+        print(bombArray)
     }
 
     @IBAction func whenTapped(_ sender: UITapGestureRecognizer)
