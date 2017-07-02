@@ -55,7 +55,10 @@ class ViewController: UIViewController
     var bombArray = Array(repeating: Array(repeating: false, count: 6), count: 6)
     var bombRow = [UIImageView : Int]()
     var bombCol = [UIImageView : Int]()
+    var numBombs = 0
+    var numFound = 0
     var toggleState = "press"
+    var lose = false
     
     func rand(lim : Int) -> Int
     {
@@ -65,7 +68,6 @@ class ViewController: UIViewController
     func rowColToNum(row : Int, col: Int) -> Int
     {
         return row*6 + col
-        
     }
     
     func doWillClick()
@@ -142,6 +144,7 @@ class ViewController: UIViewController
             }
         }
         bombs.text = "Bombs: \(counter)"
+        numBombs = counter
     }
     
     func checkWin()
@@ -156,7 +159,34 @@ class ViewController: UIViewController
         }
         if counter==36
         {
-            print("win")
+            lose = true
+            var counter = 0
+            var label : UIImageView
+            var row = 0
+            var col = 0
+            for bomb in bombArray
+            {
+                for subBomb in bomb
+                {
+                    label = numToLabel[rowColToNum(row: row, col: col)]!
+                    if subBomb==true && label.image==#imageLiteral(resourceName: "flag")
+                    {
+                        counter += 1
+                    }
+                    col += 1
+                }
+                col = 0
+                row += 1
+            }
+            numFound = counter
+            let delayInSeconds = 4.0
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds)
+            {
+                let dvc = self.storyboard?.instantiateViewController(withIdentifier: "ThiredViewController") as! ThirdViewController
+                dvc.bombs = self.numBombs
+                dvc.found = self.numFound
+                self.present(dvc, animated: true, completion: nil)
+            }
         }
     }
     
@@ -198,6 +228,35 @@ class ViewController: UIViewController
             {
                 theLabel.image = #imageLiteral(resourceName: "bomb")
                 revealBombs()
+                lose = true
+                var counter = 0
+                var label : UIImageView
+                var row = 0
+                var col = 0
+                for bomb in bombArray
+                {
+                    for subBomb in bomb
+                    {
+                        print("\(row), \(col), \(rowColToNum(row: row, col: col))")
+                        label = numToLabel[rowColToNum(row: row, col: col)]!
+                        if subBomb==true && label.image==#imageLiteral(resourceName: "flag")
+                        {
+                            counter += 1
+                        }
+                        col += 1
+                    }
+                    col = 0
+                    row += 1
+                }
+                numFound = counter
+                let delayInSeconds = 3.0
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds)
+                {
+                    let dvc = self.storyboard?.instantiateViewController(withIdentifier: "SecondViewController") as! SecondViewController
+                    dvc.bombs = self.numBombs
+                    dvc.found = self.numFound
+                    self.present(dvc, animated: true, completion: nil)
+                }
             }
             else if theLabel.image!==#imageLiteral(resourceName: "blank")
             {
@@ -258,6 +317,10 @@ class ViewController: UIViewController
 
     @IBAction func whenTapped(_ sender: UITapGestureRecognizer)
     {
+        if lose
+        {
+            return
+        }
         let selectedPoint = sender.location(in: self.view)
         for label in labels
         {
@@ -284,8 +347,8 @@ class ViewController: UIViewController
         {
             for col in 0..<6
             {
-                let randomNum = rand(lim: 5)
-                if randomNum == 4
+                let randomNum = rand(lim: 6)
+                if randomNum == 3
                 {
                     bombArray[row][col] = (true)
                 }
@@ -298,11 +361,16 @@ class ViewController: UIViewController
         }
         toggleState = "press"
         countBombs()
+        lose = false
     }
     
     @IBAction func onResetTapped(_ sender: Any)
     {
         reset()
+    }
+    
+    @IBAction func unwindToInitialViewController(segue:UIStoryboardSegue)
+    {
     }
 }
 

@@ -484,12 +484,154 @@
                     <view key="view" contentMode="scaleToFill" id="e52-te-6AS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Lose" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKZ-y0-URV">
+                                <rect key="frame" x="40" y="51" width="335" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="335" id="2Xf-fO-kep"/>
+                                    <constraint firstAttribute="height" constant="90" id="h31-VY-pNL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="50"/>
+                                <color key="textColor" red="0.50196081400000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bombs: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBy-pX-n5l">
+                                <rect key="frame" x="47" y="169" width="321" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="321" id="07y-wk-KaY"/>
+                                    <constraint firstAttribute="height" constant="47" id="xg4-ek-FOb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Found: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="msU-IN-M09">
+                                <rect key="frame" x="47" y="224" width="321" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="321" id="vir-Ts-5Ux"/>
+                                    <constraint firstAttribute="height" constant="47" id="zs3-rR-sJO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vqe-rM-u9i">
+                                <rect key="frame" x="155" y="537" width="105" height="45"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="gf7-Ek-ZSW"/>
+                                    <constraint firstAttribute="width" constant="105" id="xvY-WV-L4z"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="24"/>
+                                <state key="normal" title="Reset">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="CRe-b8-bio" kind="unwind" unwindAction="unwindToInitialViewControllerWithSegue:" id="buO-Sx-zg0"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lKZ-y0-URV" firstAttribute="centerY" secondItem="e52-te-6AS" secondAttribute="centerY" constant="-272" id="24u-17-vEm"/>
+                            <constraint firstItem="msU-IN-M09" firstAttribute="centerX" secondItem="e52-te-6AS" secondAttribute="centerX" id="8LA-D1-uUB"/>
+                            <constraint firstItem="vqe-rM-u9i" firstAttribute="centerY" secondItem="e52-te-6AS" secondAttribute="centerY" constant="191.5" id="RnD-7e-8Zl"/>
+                            <constraint firstItem="aBy-pX-n5l" firstAttribute="centerY" secondItem="e52-te-6AS" secondAttribute="centerY" constant="-175.5" id="eHu-cL-kgM"/>
+                            <constraint firstItem="msU-IN-M09" firstAttribute="centerY" secondItem="e52-te-6AS" secondAttribute="centerY" constant="-120.5" id="jQZ-9W-uKV"/>
+                            <constraint firstItem="vqe-rM-u9i" firstAttribute="centerX" secondItem="e52-te-6AS" secondAttribute="centerX" id="jkz-rY-DDL"/>
+                            <constraint firstItem="aBy-pX-n5l" firstAttribute="centerX" secondItem="e52-te-6AS" secondAttribute="centerX" id="xOB-Vr-YoY"/>
+                            <constraint firstItem="lKZ-y0-URV" firstAttribute="centerX" secondItem="e52-te-6AS" secondAttribute="centerX" id="zfM-Jc-xeb"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bombsLabel" destination="aBy-pX-n5l" id="Z0n-BO-75n"/>
+                        <outlet property="foundLabel" destination="msU-IN-M09" id="fso-ht-euA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NkJ-Pb-hWe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="CRe-b8-bio" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="850" y="140"/>
+            <point key="canvasLocation" x="849.27536231884062" y="139.4021739130435"/>
+        </scene>
+        <!--Third View Controller-->
+        <scene sceneID="lIX-DM-9xB">
+            <objects>
+                <viewController storyboardIdentifier="ThirdViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fli-Iy-3Og" customClass="ThirdViewController" customModule="App_4___Build_Your_Own___Minesweeper" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nK5-7z-3m0"/>
+                        <viewControllerLayoutGuide type="bottom" id="ATx-bh-SQY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ozl-CC-hAX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Win" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yz8-gU-c6B">
+                                <rect key="frame" x="40" y="51" width="335" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="335" id="tgS-LZ-Z6D"/>
+                                    <constraint firstAttribute="height" constant="90" id="vA3-4I-MIK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="50"/>
+                                <color key="textColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bombs: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2k-hB-xeV">
+                                <rect key="frame" x="47" y="169" width="321" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="Qsi-3q-hre"/>
+                                    <constraint firstAttribute="width" constant="321" id="kEj-Pb-tPS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Found: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izl-WK-du2">
+                                <rect key="frame" x="47" y="224" width="321" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="cel-oA-tgh"/>
+                                    <constraint firstAttribute="width" constant="321" id="yc2-vT-iBQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWp-Vt-zle">
+                                <rect key="frame" x="155" y="537" width="105" height="45"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="oXz-fF-ooz"/>
+                                    <constraint firstAttribute="width" constant="105" id="vwd-IN-80t"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="24"/>
+                                <state key="normal" title="Reset">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="z6K-YD-Arw" kind="unwind" unwindAction="unwindToInitialViewControllerWithSegue:" id="mix-f9-skB"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yz8-gU-c6B" firstAttribute="centerY" secondItem="ozl-CC-hAX" secondAttribute="centerY" constant="-272" id="3Da-cL-wk4"/>
+                            <constraint firstItem="yz8-gU-c6B" firstAttribute="centerX" secondItem="ozl-CC-hAX" secondAttribute="centerX" id="D5J-dR-48z"/>
+                            <constraint firstItem="Z2k-hB-xeV" firstAttribute="centerX" secondItem="ozl-CC-hAX" secondAttribute="centerX" id="IKt-mU-gUf"/>
+                            <constraint firstItem="izl-WK-du2" firstAttribute="centerX" secondItem="ozl-CC-hAX" secondAttribute="centerX" id="K9N-Gj-vXE"/>
+                            <constraint firstItem="Z2k-hB-xeV" firstAttribute="centerY" secondItem="ozl-CC-hAX" secondAttribute="centerY" constant="-175.5" id="eu3-q2-k9K"/>
+                            <constraint firstItem="izl-WK-du2" firstAttribute="centerY" secondItem="ozl-CC-hAX" secondAttribute="centerY" constant="-120.5" id="jF7-0E-21w"/>
+                            <constraint firstItem="NWp-Vt-zle" firstAttribute="centerY" secondItem="ozl-CC-hAX" secondAttribute="centerY" constant="191.5" id="w00-fY-w74"/>
+                            <constraint firstItem="NWp-Vt-zle" firstAttribute="centerX" secondItem="ozl-CC-hAX" secondAttribute="centerX" id="zMV-8c-ZGr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bombsLabel" destination="Z2k-hB-xeV" id="FIq-vC-ER6"/>
+                        <outlet property="foundLabel" destination="izl-WK-du2" id="HT4-AH-ubU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="guO-dE-gcB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="z6K-YD-Arw" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1580" y="139"/>
         </scene>
     </scenes>
 </document>

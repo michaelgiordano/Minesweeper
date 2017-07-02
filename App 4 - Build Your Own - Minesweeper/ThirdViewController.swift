@@ -1,15 +1,14 @@
 //
-//  SecondViewController.swift
+//  ThirdViewController.swift
 //  App 4 - Build Your Own - Minesweeper
 //
-//  Created by Michael Giordano on 6/30/17.
+//  Created by Michael Giordano on 7/1/17.
 //  Copyright © 2017 Michael Giordano. All rights reserved.
 //
 
 import UIKit
 
-class SecondViewController: UIViewController
-{
+class ThirdViewController: UIViewController {
     @IBOutlet weak var bombsLabel: UILabel!
     @IBOutlet weak var foundLabel: UILabel!
     
