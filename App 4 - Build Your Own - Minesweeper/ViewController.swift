@@ -179,12 +179,13 @@ class ViewController: UIViewController
                 row += 1
             }
             numFound = counter
-            let delayInSeconds = 4.0
+            let delayInSeconds = 0.3
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds)
             {
-                let dvc = self.storyboard?.instantiateViewController(withIdentifier: "ThiredViewController") as! ThirdViewController
+                let dvc = self.storyboard?.instantiateViewController(withIdentifier: "ThirdViewController") as! ThirdViewController
                 dvc.bombs = self.numBombs
                 dvc.found = self.numFound
+                self.reset()
                 self.present(dvc, animated: true, completion: nil)
             }
         }
@@ -255,6 +256,7 @@ class ViewController: UIViewController
                     let dvc = self.storyboard?.instantiateViewController(withIdentifier: "SecondViewController") as! SecondViewController
                     dvc.bombs = self.numBombs
                     dvc.found = self.numFound
+                    self.reset()
                     self.present(dvc, animated: true, completion: nil)
                 }
             }
