@@ -426,8 +426,12 @@ class ViewController: UIViewController
             }
             else
             {
-                customNumBombs = 6 + rand(lim: 5)
+                customNumBombs = 4 + rand(lim: 5)
             }
+        }
+        if customNumBombs==0
+        {
+            customNumBombs = 4 + rand(lim: 5)
         }
         bombInput.resignFirstResponder()
         var row = 0
