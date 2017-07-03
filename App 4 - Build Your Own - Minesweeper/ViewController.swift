@@ -142,14 +142,14 @@ class ViewController: UIViewController
         {
             for subBomb in bomb
             {
-                if subBomb==true
+                if subBomb == true
                 {
                     counter += 1
                 }
             }
         }
-        bombs.text = "Bombs: \(counter)"
         numBombs = counter
+        bombs.text = "Bombs: \(numBombs)"
     }
     
     func checkWin()
@@ -323,7 +323,6 @@ class ViewController: UIViewController
         numToLabel = [0:box0, 1:box1, 2:box2, 3:box3, 4:box4, 5:box5, 6:box6, 7:box7, 8:box8, 9:box9, 10:box10, 11:box11, 12:box12, 13:box13, 14:box14, 15:box15, 16:box16, 17:box17, 18:box18, 19:box19, 20:box20, 21:box21, 22:box22, 23:box23, 24:box24, 25:box25, 26:box26, 27:box27, 28:box28, 29:box29, 30:box30, 31:box31, 32:box32, 33:box33, 34:box34, 35:box35]
         bombRow = [box0:0, box1:0, box2:0, box3:0, box4:0, box5:0, box6:1, box7:1, box8:1, box9:1, box10:1, box11:1, box12:2, box13:2, box14:2, box15:2, box16:2, box17:2, box18:3, box19:3, box20:3, box21:3, box22:3, box23:3, box24:4, box25:4, box26:4, box27:4, box28:4, box29:4, box30:5, box31:5, box32:5, box33:5, box34:5, box35:5]
         bombCol = [box0:0, box1:1, box2:2, box3:3, box4:4, box5:5, box6:0, box7:1, box8:2, box9:3, box10:4, box11:5, box12:0, box13:1, box14:2, box15:3, box16:4, box17:5, box18:0, box19:1, box20:2, box21:3, box22:4, box23:5, box24:0, box25:1, box26:2, box27:3, box28:4, box29:5, box30:0, box31:1, box32:2, box33:3, box34:4, box35:5]
-        print("we got to the end of viewDidLoad")
         reset()
     }
 
@@ -415,16 +414,13 @@ class ViewController: UIViewController
             if num>0 && num<13
             {
                 customNumBombs = num
-                print("given num")
+            }
+            else
+            {
+                customNumBombs = 6 + rand(lim: 5)
             }
         }
-        else
-        {
-            customNumBombs = 6 + rand(lim: 5)
-        }
         bombInput.resignFirstResponder()
-        print(String(describing: bombInput.text))
-        print("given out of bounds, made rand num")
         var row = 0
         var col = 0
         for bomb in bombArray
