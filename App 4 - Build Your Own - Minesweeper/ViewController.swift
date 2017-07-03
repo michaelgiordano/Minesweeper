@@ -155,14 +155,21 @@ class ViewController: UIViewController
     func checkWin()
     {
         var counter = 0
+        var flagCounter = 0
         for label in labels
         {
             if label.image != #imageLiteral(resourceName: "newBlank") && label.image != #imageLiteral(resourceName: "bomb")
             {
                 counter += 1
             }
+            if label.image == #imageLiteral(resourceName: "flag")
+            {
+                flagCounter += 1
+            }
         }
-        if counter==36
+        print("not bomb or blank: \(counter)")
+        print("flag: \(flagCounter)")
+        if counter==36 && flagCounter==numBombs
         {
             lose = true
             var counter = 0
@@ -304,6 +311,8 @@ class ViewController: UIViewController
             if theLabel.image!==#imageLiteral(resourceName: "newBlank")
             {
                 theLabel.image = #imageLiteral(resourceName: "flag")
+                checkWin()
+                print("checked win after flagging")
             }
             else if theLabel.image!==#imageLiteral(resourceName: "flag")
             {
