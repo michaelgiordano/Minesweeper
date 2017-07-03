@@ -390,7 +390,7 @@ class ViewController: UIViewController
         }
         countBombs()
         lose = false
-        only.text = "(1-12 only)"
+        only.text = "(4-12 only)"
     }
     
     @IBAction func onResetTapped(_ sender: Any)
@@ -420,7 +420,7 @@ class ViewController: UIViewController
         lose = false
         if let num = Int(bombInput.text!)
         {
-            if num>0 && num<13
+            if num>3 && num<13
             {
                 customNumBombs = num
             }
