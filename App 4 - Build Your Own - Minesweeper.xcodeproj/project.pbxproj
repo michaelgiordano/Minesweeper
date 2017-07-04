@@ -424,7 +424,7 @@
 				DEVELOPMENT_TEAM = K47CUGM2AK;
 				INFOPLIST_FILE = "App 4 - Build Your Own - Minesweeper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Michael-Giordano.App-4---Build-Your-Own---Minesweeper";
+				PRODUCT_BUNDLE_IDENTIFIER = "MichaelGiordano.App-4---Build-Your-Own---Minesweeper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -437,7 +437,7 @@
 				DEVELOPMENT_TEAM = K47CUGM2AK;
 				INFOPLIST_FILE = "App 4 - Build Your Own - Minesweeper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Michael-Giordano.App-4---Build-Your-Own---Minesweeper";
+				PRODUCT_BUNDLE_IDENTIFIER = "MichaelGiordano.App-4---Build-Your-Own---Minesweeper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
