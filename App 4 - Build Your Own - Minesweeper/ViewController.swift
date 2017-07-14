@@ -167,8 +167,8 @@ class ViewController: UIViewController
                 flagCounter += 1
             }
         }
-        print("not bomb or blank: \(counter)")
-        print("flag: \(flagCounter)")
+        //print("not bomb or blank: \(counter)")
+        //print("flag: \(flagCounter)")
         if counter==36 && flagCounter==numBombs
         {
             lose = true
@@ -250,7 +250,7 @@ class ViewController: UIViewController
                 {
                     for subBomb in bomb
                     {
-                        print("\(row), \(col), \(rowColToNum(row: row, col: col))")
+                        //print("\(row), \(col), \(rowColToNum(row: row, col: col))")
                         label = numToLabel[rowColToNum(row: row, col: col)]!
                         if subBomb==true && label.image==#imageLiteral(resourceName: "flag")
                         {
@@ -312,7 +312,7 @@ class ViewController: UIViewController
             {
                 theLabel.image = #imageLiteral(resourceName: "flag")
                 checkWin()
-                print("checked win after flagging")
+                //print("checked win after flagging")
             }
             else if theLabel.image!==#imageLiteral(resourceName: "flag")
             {

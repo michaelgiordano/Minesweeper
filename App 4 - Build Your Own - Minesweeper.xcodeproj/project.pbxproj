@@ -199,7 +199,7 @@
 				TargetAttributes = {
 					E9A075961F06C8E100BE411B = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = K47CUGM2AK;
+						DevelopmentTeam = 495Q827474;
 						ProvisioningStyle = Automatic;
 					};
 					E9A075AA1F06C8E200BE411B = {
@@ -421,10 +421,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K47CUGM2AK;
+				DEVELOPMENT_TEAM = 495Q827474;
 				INFOPLIST_FILE = "App 4 - Build Your Own - Minesweeper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "MichaelGiordano.App-4---Build-Your-Own---Minesweeper";
+				PRODUCT_BUNDLE_IDENTIFIER = "MichaelGiordano.App-4---Build-Your-Own---Minesweeper--New";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -434,10 +434,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K47CUGM2AK;
+				DEVELOPMENT_TEAM = 495Q827474;
 				INFOPLIST_FILE = "App 4 - Build Your Own - Minesweeper/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "MichaelGiordano.App-4---Build-Your-Own---Minesweeper";
+				PRODUCT_BUNDLE_IDENTIFIER = "MichaelGiordano.App-4---Build-Your-Own---Minesweeper--New";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
