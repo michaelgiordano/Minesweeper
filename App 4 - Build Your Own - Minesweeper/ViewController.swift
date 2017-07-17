@@ -357,9 +357,14 @@ class ViewController: UIViewController
                 bombArray[row][col] = false
             }
         }
-        for _ in 0..<numBombs //adds 'numBombs' number of bombs to bomb array
+        var countdown = numBombs
+        while countdown>0 //adds 'numBombs' number of bombs to bomb array
         {
-            bombArray[rand(lim: 8)][rand(lim: 8)] = true
+            if !bombArray[rand(lim: 8)][rand(lim: 8)]
+            {
+                bombArray[rand(lim: 8)][rand(lim: 8)] = true
+                countdown -= 1
+            }
         }
         calcNumberArray()
         bombs.text = "Bombs: \(numBombs)" //displays number of bombs in label
