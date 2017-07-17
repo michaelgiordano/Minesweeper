@@ -103,11 +103,11 @@
 			children = (
 				E9A0759A1F06C8E100BE411B /* AppDelegate.swift */,
 				E9A0759C1F06C8E100BE411B /* ViewController.swift */,
-				E9A0759E1F06C8E100BE411B /* Main.storyboard */,
 				E9A075C81F06D7E400BE411B /* SecondViewController.swift */,
 				E9A075CA1F088CB000BE411B /* ThirdViewController.swift */,
-				E9A075A11F06C8E100BE411B /* Assets.xcassets */,
+				E9A0759E1F06C8E100BE411B /* Main.storyboard */,
 				E9A075A31F06C8E100BE411B /* LaunchScreen.storyboard */,
+				E9A075A11F06C8E100BE411B /* Assets.xcassets */,
 				E9A075A61F06C8E100BE411B /* Info.plist */,
 			);
 			path = "App 4 - Build Your Own - Minesweeper";

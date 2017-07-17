@@ -16,47 +16,12 @@ class ViewController: UIViewController
     @IBOutlet weak var only: UILabel!
     @IBOutlet weak var bombs: UILabel!
     @IBOutlet weak var toggleButton: UIImageView!
-    @IBOutlet weak var box0: UIImageView!
-    @IBOutlet weak var box1: UIImageView!
-    @IBOutlet weak var box2: UIImageView!
-    @IBOutlet weak var box3: UIImageView!
-    @IBOutlet weak var box4: UIImageView!
-    @IBOutlet weak var box5: UIImageView!
-    @IBOutlet weak var box6: UIImageView!
-    @IBOutlet weak var box7: UIImageView!
-    @IBOutlet weak var box8: UIImageView!
-    @IBOutlet weak var box9: UIImageView!
-    @IBOutlet weak var box10: UIImageView!
-    @IBOutlet weak var box11: UIImageView!
-    @IBOutlet weak var box12: UIImageView!
-    @IBOutlet weak var box13: UIImageView!
-    @IBOutlet weak var box14: UIImageView!
-    @IBOutlet weak var box15: UIImageView!
-    @IBOutlet weak var box16: UIImageView!
-    @IBOutlet weak var box17: UIImageView!
-    @IBOutlet weak var box18: UIImageView!
-    @IBOutlet weak var box19: UIImageView!
-    @IBOutlet weak var box20: UIImageView!
-    @IBOutlet weak var box21: UIImageView!
-    @IBOutlet weak var box22: UIImageView!
-    @IBOutlet weak var box23: UIImageView!
-    @IBOutlet weak var box24: UIImageView!
-    @IBOutlet weak var box25: UIImageView!
-    @IBOutlet weak var box26: UIImageView!
-    @IBOutlet weak var box27: UIImageView!
-    @IBOutlet weak var box28: UIImageView!
-    @IBOutlet weak var box29: UIImageView!
-    @IBOutlet weak var box30: UIImageView!
-    @IBOutlet weak var box31: UIImageView!
-    @IBOutlet weak var box32: UIImageView!
-    @IBOutlet weak var box33: UIImageView!
-    @IBOutlet weak var box34: UIImageView!
-    @IBOutlet weak var box35: UIImageView!
     
-    var labels = [UIImageView]()
+    var imageViews = [[UIImageView]]()
     var willClick = [UIImageView]()
     var numToLabel = [Int : UIImageView]()
-    var bombArray = Array(repeating: Array(repeating: false, count: 6), count: 6)
+    var bombArray = Array(repeating: Array(repeating: false, count: 8), count: 8)
+    var numberArray = Array(repeating: Array(repeating: -1, count: 8), count: 8)
     var bombRow = [UIImageView : Int]()
     var bombCol = [UIImageView : Int]()
     var customNumBombs = 0
@@ -64,218 +29,86 @@ class ViewController: UIViewController
     var numFound = 0
     var toggleState = "press"
     var lose = false
+    var shouldCheckWin = true
     
-    func rand(lim : Int) -> Int
+    override func viewDidLoad() //runs at the beginning when the app loads
     {
-        return Int(arc4random_uniform(UInt32(lim)))
+        super.viewDidLoad()
+        only.text = "(5-20 only)" //sets 'only' text right below custom bomb input
+        goButton.layer.cornerRadius = 5 //rounding go button:
+        goButton.clipsToBounds = true
+        resetButton.layer.cornerRadius = 5 //rounding reset button:
+        resetButton.clipsToBounds = true
+        layImageViews() //laying out imageViews as blanks
+        reset() //loading a new game with 10 bombs
     }
     
-    func rowColToNum(row : Int, col: Int) -> Int
+    func clicked (theLabel : UIImageView) //called when a given UIImageView is clicked (called from UITapGestureRecognizer)
     {
-        return row*6 + col
-    }
-    
-    func doWillClick()
-    {
-        for label in willClick
-        {
-            clicked(theLabel : label)
-        }
-        willClick = []
-    }
-    
-    func willClickAppend(row : Int, col : Int)
-    {
-        if checkOutOfBounds(row: row, col: col)
-        {
-            willClick.append(numToLabel[rowColToNum(row: row, col: col)]!)
-        }
-    }
-    
-    func checkSpecific(row : Int, col : Int) -> Int
-    {
-        if row<0 || row>5 || col<0 || col>5{
-            return 0
-        }
-        if bombArray[row][col]
-        {
-            return 1
-        }
-        else
-        {
-            return 0
-        }
-    }
-    
-    func checkOutOfBounds(row : Int, col : Int) -> Bool
-    {
-        if row<0 || row>5 || col<0 || col>5
-        {
-            return false
-        }
-        else
-        {
-            return true
-        }
-    }
-    
-    func revealBombs()
-    {
-        for row in 0..<6
-        {
-            for col in 0..<6
-            {
-                var label : UIImageView
-                label = numToLabel[rowColToNum(row: row, col: col)]!
-                if label.image != #imageLiteral(resourceName: "flag") && bombArray[row][col]
-                {
-                    label.image = #imageLiteral(resourceName: "bomb")
-                }
-            }
-        }
-    }
-    
-    func countBombs()
-    {
-        var counter = 0
-        for bomb in bombArray
-        {
-            for subBomb in bomb
-            {
-                if subBomb == true
-                {
-                    counter += 1
-                }
-            }
-        }
-        numBombs = counter
-        bombs.text = "Bombs: \(numBombs)"
-    }
-    
-    func checkWin()
-    {
-        var counter = 0
-        var flagCounter = 0
-        for label in labels
-        {
-            if label.image != #imageLiteral(resourceName: "newBlank") && label.image != #imageLiteral(resourceName: "bomb")
-            {
-                counter += 1
-            }
-            if label.image == #imageLiteral(resourceName: "flag")
-            {
-                flagCounter += 1
-            }
-        }
-        //print("not bomb or blank: \(counter)")
-        //print("flag: \(flagCounter)")
-        if counter==36 && flagCounter==numBombs
-        {
-            lose = true
-            var counter = 0
-            var label : UIImageView
-            var row = 0
-            var col = 0
-            for bomb in bombArray
-            {
-                for subBomb in bomb
-                {
-                    label = numToLabel[rowColToNum(row: row, col: col)]!
-                    if subBomb==true && label.image==#imageLiteral(resourceName: "flag")
-                    {
-                        counter += 1
-                    }
-                    col += 1
-                }
-                col = 0
-                row += 1
-            }
-            numFound = counter
-            let delayInSeconds = 0.3
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds)
-            {
-                let dvc = self.storyboard?.instantiateViewController(withIdentifier: "ThirdViewController") as! ThirdViewController
-                dvc.bombs = self.numBombs
-                dvc.found = self.numFound
-                self.reset()
-                self.present(dvc, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    func vicinity(theLabel : UIImageView) -> Int
-    {
-        var counter = 0
-        let theRow = bombRow[theLabel]
-        let theCol = bombCol[theLabel]
-        counter += checkSpecific(row: theRow!-1, col: theCol!)   //top
-        counter += checkSpecific(row: theRow!, col: theCol!+1)   //right
-        counter += checkSpecific(row: theRow!+1, col: theCol!)   //bottom
-        counter += checkSpecific(row: theRow!, col: theCol!-1)   //left
-        counter += checkSpecific(row: theRow!-1, col: theCol!-1) //upper left
-        counter += checkSpecific(row: theRow!-1, col: theCol!+1) //upper right
-        counter += checkSpecific(row: theRow!+1, col: theCol!+1) //bottom right
-        counter += checkSpecific(row: theRow!+1, col: theCol!-1) //bottom left
-        return counter
-    }
-    
-    func clicked (theLabel : UIImageView)
-    {
-        if theLabel.image!==#imageLiteral(resourceName: "toggleFlag")
+        if theLabel.image! == #imageLiteral(resourceName: "toggleFlag") //if the toggle was clicked, switch it
         {
             toggleButton.image = #imageLiteral(resourceName: "togglePress")
             toggleState = "press"
         }
-        else if theLabel.image!==#imageLiteral(resourceName: "togglePress")
+        else if theLabel.image! == #imageLiteral(resourceName: "togglePress") //if the toggle was clicked, switch it (same as above, just opposite images)
         {
             toggleButton.image = #imageLiteral(resourceName: "toggleFlag")
             toggleState = "flag"
         }
-        else if toggleState=="press"
+        else if toggleState=="flag" //if the toggle is on flag...
         {
-            if theLabel.image!==#imageLiteral(resourceName: "num1") || theLabel.image!==#imageLiteral(resourceName: "num2") || theLabel.image!==#imageLiteral(resourceName: "num3") || theLabel.image!==#imageLiteral(resourceName: "num4") || theLabel.image!==#imageLiteral(resourceName: "num5") || theLabel.image!==#imageLiteral(resourceName: "num6") || theLabel.image!==#imageLiteral(resourceName: "flag") || theLabel.image!==#imageLiteral(resourceName: "bomb")
+            if theLabel.image! == #imageLiteral(resourceName: "newBlank") //...flag the square if it is blank (uncovered)
+            {
+                theLabel.image = #imageLiteral(resourceName: "flag")
+            }
+            else if theLabel.image! == #imageLiteral(resourceName: "flag") //...unflag the square if it is flagged
+            {
+                theLabel.image = #imageLiteral(resourceName: "newBlank")
+            }
+        }
+        else if toggleState=="press" //if the toggle is on press...
+        {
+            let pair = theLabel.accessibilityIdentifier! //using the UIImageView's identifier to get its row and column
+            let index1 = pair.index(pair.startIndex, offsetBy: 1)
+            let theRow = Int(pair.substring(to: index1))!
+            let theCol = Int(pair.substring(from: index1))!
+            if theLabel.image! == #imageLiteral(resourceName: "num1") || theLabel.image! == #imageLiteral(resourceName: "num2") || theLabel.image! == #imageLiteral(resourceName: "num3") || theLabel.image! == #imageLiteral(resourceName: "num4") || theLabel.image! == #imageLiteral(resourceName: "num5") || theLabel.image! == #imageLiteral(resourceName: "num6") || theLabel.image! == #imageLiteral(resourceName: "flag") || theLabel.image! == #imageLiteral(resourceName: "bomb") //if it's a number, then do nothing
             {
                 return
             }
-            else if theLabel.image==#imageLiteral(resourceName: "newBlank") && bombArray[bombRow[theLabel]!][bombCol[theLabel]!]
+            else if theLabel.image == #imageLiteral(resourceName: "newBlank") && bombArray[theRow][theCol] == true //if the imageView is blank and there's a bomb underneath
             {
-                theLabel.image = #imageLiteral(resourceName: "bomb")
-                revealBombs()
-                lose = true
-                var counter = 0
-                var label : UIImageView
-                var row = 0
-                var col = 0
-                for bomb in bombArray
+                revealBombs() //reveal the bombs
+                lose = true //the player has lost
+                numFound = 0 //reset the numFound becuase we are about to count this and increment it
+                for row in 0..<8 //cycling through the bomb array
                 {
-                    for subBomb in bomb
+                    for col in 0..<8
                     {
-                        //print("\(row), \(col), \(rowColToNum(row: row, col: col))")
-                        label = numToLabel[rowColToNum(row: row, col: col)]!
-                        if subBomb==true && label.image==#imageLiteral(resourceName: "flag")
+                        if bombArray[row][col] == true && imageViews[row][col].image == #imageLiteral(resourceName: "flag") //if there is a bomb there and the player flagged it before they lost
                         {
-                            counter += 1
+                            numFound += 1
                         }
-                        col += 1
                     }
-                    col = 0
-                    row += 1
                 }
-                numFound = counter
-                let delayInSeconds = 1.5
+                let delayInSeconds = 1.0 //delay for 1.0 seconds so that the user can see all the bombs
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds)
                 {
+                    //setting destination of segue
                     let dvc = self.storyboard?.instantiateViewController(withIdentifier: "SecondViewController") as! SecondViewController
-                    dvc.bombs = self.numBombs
-                    dvc.found = self.numFound
-                    self.reset()
-                    self.present(dvc, animated: true, completion: nil)
+                    dvc.bombs = self.numBombs //transfer over the number of bombs overall
+                    dvc.found = self.numFound //transfer over the number of bombs found
+                    self.reset() //reset the screen before leaving
+                    self.present(dvc, animated: true, completion: nil) //segue-ing to the lose screen
                 }
             }
-            else if theLabel.image!==#imageLiteral(resourceName: "newBlank")
+            else if theLabel.image! == #imageLiteral(resourceName: "newBlank") //if its blank and there's no bomb underneath (we check that above)
             {
-                let vicNum = vicinity(theLabel: theLabel)
-                switch vicNum
+                let pair = theLabel.accessibilityIdentifier! //using the UIImageView's identifier to get it's row and column
+                let index1 = pair.index(pair.startIndex, offsetBy: 1)
+                let theRow = Int(pair.substring(to: index1))!
+                let theCol = Int(pair.substring(from: index1))!
+                switch numberArray[theRow][theCol] //setting the image to display it vicinity number (gotten from the row and col above)
                 {
                 case 1:
                     theLabel.image = #imageLiteral(resourceName: "num1")
@@ -290,110 +123,255 @@ class ViewController: UIViewController
                 case 6:
                     theLabel.image = #imageLiteral(resourceName: "num6")
                 default:
+                    shouldCheckWin = false
                     theLabel.image = #imageLiteral(resourceName: "mediumLightBlank")
-                    let row = bombRow[theLabel]
-                    let col = bombCol[theLabel]
-                    willClickAppend(row: row!-1, col: col!)
-                    willClickAppend(row: row!, col: col!+1)
-                    willClickAppend(row: row!+1, col: col!)
-                    willClickAppend(row: row!, col: col!-1)
-                    willClickAppend(row: row!-1, col: col!-1)
-                    willClickAppend(row: row!-1, col: col!+1)
-                    willClickAppend(row: row!+1, col: col!+1)
-                    willClickAppend(row: row!+1, col: col!-1)
-                    doWillClick()
+                    for rowChange in -1...1
+                    {
+                        for colChange in -1...1
+                        {
+                            if (rowChange != 0 || colChange != 0) && checkOutOfBounds(row: theRow+rowChange, col: theCol+colChange)
+                            {
+                                clicked(theLabel: imageViews[theRow+rowChange][theCol+colChange])
+                            }
+                        }
+                    }
                 }
             }
+        }
+        if shouldCheckWin
+        {
             checkWin()
         }
-        else if toggleState=="flag"
+    }
+    
+    func checkWin() //checks to see if the player has won
+    {
+        var counter = 0 //number of imageViews adressed (either opened or flagged)
+        var flagCounter = 0 //number of imageViews flagged
+        for row in imageViews
         {
-            if theLabel.image!==#imageLiteral(resourceName: "newBlank")
+            for col in row
             {
-                theLabel.image = #imageLiteral(resourceName: "flag")
-                checkWin()
-                //print("checked win after flagging")
+                if col.image != #imageLiteral(resourceName: "newBlank") && col.image != #imageLiteral(resourceName: "bomb") //if the imageView is not a blank or a bomb
+                {
+                    counter += 1 //increment the counter
+                }
+                if col.image == #imageLiteral(resourceName: "flag") //if the imageView is flagged
+                {
+                    flagCounter += 1 //increment flagged label counter
+                }
             }
-            else if theLabel.image!==#imageLiteral(resourceName: "flag")
+        }
+        if counter == 64 && flagCounter == numBombs //if they have adressed every imageView and flagged all the bombs
+        {
+            lose = true //not that they lost, but this essentialy says the game is over
+            numFound = 0 //reset the numFound becuase we are about to count this and increment it
+            for row in 0..<8
             {
-                theLabel.image = #imageLiteral(resourceName: "newBlank")
+                for col in 0..<8
+                {
+                    if bombArray[row][col] == true && imageViews[row][col].image == #imageLiteral(resourceName: "flag") //if it's a bomb and you flagged it
+                    {
+                        numFound += 1 //increment the number of bombs you found
+                    }
+                }
+            }
+            let delayInSeconds = 0.2 //give the use a second to see that they actually tapped that 'winning imageView'
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayInSeconds)
+            {
+                //setting destination of segue
+                let dvc = self.storyboard?.instantiateViewController(withIdentifier: "ThirdViewController") as! ThirdViewController
+                dvc.bombs = self.numBombs //pass over number of bombs total
+                dvc.found = self.numFound //pass over number of bombs found
+                self.reset()
+                self.present(dvc, animated: true, completion: nil)
             }
         }
     }
     
-    override func viewDidLoad()
+    func checkOutOfBounds(row : Int, col : Int) -> Bool //checks if a given row-col pair is a valid 2d array index
     {
-        super.viewDidLoad()
-        goButton.layer.cornerRadius = 5
-        goButton.clipsToBounds = true
-        resetButton.layer.cornerRadius = 5
-        resetButton.clipsToBounds = true
-        labels = [box0, box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12, box13, box14, box15, box16, box17, box18, box19, box20, box21, box22, box23, box24, box25, box26, box27, box28, box29, box30, box31, box32, box33, box34, box35]
-        numToLabel = [0:box0, 1:box1, 2:box2, 3:box3, 4:box4, 5:box5, 6:box6, 7:box7, 8:box8, 9:box9, 10:box10, 11:box11, 12:box12, 13:box13, 14:box14, 15:box15, 16:box16, 17:box17, 18:box18, 19:box19, 20:box20, 21:box21, 22:box22, 23:box23, 24:box24, 25:box25, 26:box26, 27:box27, 28:box28, 29:box29, 30:box30, 31:box31, 32:box32, 33:box33, 34:box34, 35:box35]
-        bombRow = [box0:0, box1:0, box2:0, box3:0, box4:0, box5:0, box6:1, box7:1, box8:1, box9:1, box10:1, box11:1, box12:2, box13:2, box14:2, box15:2, box16:2, box17:2, box18:3, box19:3, box20:3, box21:3, box22:3, box23:3, box24:4, box25:4, box26:4, box27:4, box28:4, box29:4, box30:5, box31:5, box32:5, box33:5, box34:5, box35:5]
-        bombCol = [box0:0, box1:1, box2:2, box3:3, box4:4, box5:5, box6:0, box7:1, box8:2, box9:3, box10:4, box11:5, box12:0, box13:1, box14:2, box15:3, box16:4, box17:5, box18:0, box19:1, box20:2, box21:3, box22:4, box23:5, box24:0, box25:1, box26:2, box27:3, box28:4, box29:5, box30:0, box31:1, box32:2, box33:3, box34:4, box35:5]
-        reset()
+        if row<0 || row>7 || col<0 || col>7
+        {
+            return false
+        }
+        else
+        {
+            return true
+        }
+    }
+    
+    func revealBombs() //reveals all bombs (for when player loses)
+    {
+        for row in 0..<8
+        {
+            for col in 0..<8
+            {
+                let label = imageViews[row][col]
+                if bombArray[row][col] && label.image != #imageLiteral(resourceName: "flag")
+                {
+                    label.image = #imageLiteral(resourceName: "bomb")
+                }
+            }
+        }
     }
 
-    @IBAction func whenTapped(_ sender: UITapGestureRecognizer)
+    @IBAction func whenTapped(_ sender: UITapGestureRecognizer) //recieves finger taps and tells other funcs what was tapped
     {
         if lose
         {
             return
         }
+        shouldCheckWin = true
         let selectedPoint = sender.location(in: self.view)
-        for label in labels
+        for row in imageViews
         {
-            if label.frame.contains(selectedPoint)
+            for col in row
             {
-                clicked(theLabel : label)
+                if col.frame.contains(selectedPoint) //if user tapped given square
+                {
+                    clicked(theLabel : col)
+                }
             }
         }
-        
-        if toggleButton.frame.contains(selectedPoint)
+        if toggleButton.frame.contains(selectedPoint) //if user tapped press/flag toggle button
         {
             clicked(theLabel : toggleButton)
         }
     }
     
-    func reset()
+    func calcNumberArray() //does calculations and fills the numberArray with the vicinity numbers
     {
-        for eachLabel in labels
+        for row in 0...7
         {
-            eachLabel.image = #imageLiteral(resourceName: "newBlank")
-        }
-        toggleButton.image = #imageLiteral(resourceName: "togglePress")
-        toggleState = "press"
-        bombInput.text = ""
-        bombInput.placeholder = "Custom"
-        customNumBombs = 6 + rand(lim: 5)
-        var row = 0
-        var col = 0
-        for bomb in bombArray
-        {
-            for _ in bomb
+            for col in 0...7
             {
-                bombArray[row][col] = false
-                col += 1
-            }
-            col = 0
-            row += 1
-        }
-        while(customNumBombs>0)
-        {
-            let randSpot = rand(lim: 36)
-            if bombArray[bombRow[numToLabel[randSpot]!]!][bombCol[numToLabel[randSpot]!]!] == false
-            {
-                bombArray[bombRow[numToLabel[randSpot]!]!][bombCol[numToLabel[randSpot]!]!] = true
-                customNumBombs -= 1
+                if bombArray[row][col]
+                {
+                    numberArray[row][col] = -1 //invalid value because its a bomb
+                }
+                else
+                {
+                    var counter = 0
+                    counter += checkSpecific(row: row-1, col: col)   //top
+                    counter += checkSpecific(row: row, col: col+1)   //right
+                    counter += checkSpecific(row: row+1, col: col)   //bottom
+                    counter += checkSpecific(row: row, col: col-1)   //left
+                    counter += checkSpecific(row: row-1, col: col-1) //upper left
+                    counter += checkSpecific(row: row-1, col: col+1) //upper right
+                    counter += checkSpecific(row: row+1, col: col+1) //bottom right
+                    counter += checkSpecific(row: row+1, col: col-1) //bottom left
+                    numberArray[row][col] = counter
+                }
             }
         }
-        countBombs()
-        lose = false
-        only.text = "(4-12 only)"
     }
     
-    @IBAction func onResetTapped(_ sender: Any)
+    func checkSpecific(row : Int, col : Int) -> Int //checks a specific row and col to see if there is a bomb there. return 1 = bomb, 0 = no bomb
+    {
+        if row<0 || row>7 || col<0 || col>7
+        {
+            return 0
+        }
+        if bombArray[row][col]
+        {
+            return 1
+        }
+        else
+        {
+            return 0
+        }
+    }
+    
+    func layImageViews() //lays blank image views in 8x8 pattern and adds image view objects to imageViews[] in order
+    {
+        imageViews = []
+        let numAcross = CGFloat(8)
+        let indWidth = self.view.frame.width/numAcross - 5/numAcross - 5
+        for row in 1...8
+        {
+            var tempRow = [UIImageView]()
+            for col in 1...Int(numAcross)
+            {
+                let imageView = UIImageView(image: #imageLiteral(resourceName: "newBlank"))
+                imageView.frame = CGRect(x: self.view.frame.minX+(indWidth)*CGFloat(col)-indWidth/2,
+                                         y: (self.view.frame.maxY-450)+(indWidth)*CGFloat(row),
+                                         width: indWidth,
+                                         height: indWidth)
+                imageView.accessibilityIdentifier = "\(row-1)\(col-1)"
+                view.addSubview(imageView)
+                tempRow.append(imageView) //adding UIImageView to temporary array tempRow[]
+            }
+            imageViews.append(tempRow) //adding temporary array of UIImageViews to global 2D array [[imageViews]]
+        }
+    }
+    
+    func goTapped() //resets the screen with inputted number of bombs or 10 if the input is invalid
+    {
+        var valueGood = false
+        bombInput.resignFirstResponder() //hides number pad
+        layImageViews() //re-lays blank squares
+        toggleButton.image = #imageLiteral(resourceName: "togglePress") //changing toggle back to 'press':
+        toggleState = "press"
+        numBombs = 10 //default number of bombs
+        if let num = Int(bombInput.text!) //changes numBombs to be the bomb user input as long as it is a valid input
+        {
+            if num>4 && num<21
+            {
+                numBombs = num
+                valueGood = true
+            }
+        }
+        if !valueGood
+        {
+            bombInput.text = ""
+        }
+        for row in 0...7 //sets all bomb values to false (no bombs)
+        {
+            for col in 0...7
+            {
+                bombArray[row][col] = false
+            }
+        }
+        for _ in 0..<numBombs //adds 'numBombs' number of bombs to bomb array
+        {
+            bombArray[rand(lim: 8)][rand(lim: 8)] = true
+        }
+        calcNumberArray()
+        bombs.text = "Bombs: \(numBombs)"
+        lose = false //the player has not lost
+    }
+    
+    func reset() //resets the screen with 10 bombs
+    {
+        layImageViews() //re-lays blank squares
+        toggleButton.image = #imageLiteral(resourceName: "togglePress") //changing toggle back to 'press':
+        toggleState = "press"
+        bombInput.text = "" //sets the bomb input field to blank
+        bombInput.placeholder = "Custom" //adds 'custom' gray placeholder to bomb input field
+        numBombs = 10 //default number of bombs
+        for row in 0...7 //sets all bomb values to false (no bombs)
+        {
+            for col in 0...7
+            {
+                bombArray[row][col] = false
+            }
+        }
+        for _ in 0..<numBombs //adds 'numBombs' number of bombs to bomb array
+        {
+            bombArray[rand(lim: 8)][rand(lim: 8)] = true
+        }
+        calcNumberArray()
+        bombs.text = "Bombs: \(numBombs)" //displays number of bombs in label
+        lose = false //the player has not lost
+    }
+    
+    func rand(lim : Int) -> Int //returns a random integer from including zero up to but not including parameter lim
+    {
+        return Int(arc4random_uniform(UInt32(lim)))
+    }
+    
+    @IBAction func onResetTapped(_ sender: Any) //as long as the player hasnt lost, reset the screen
     {
         if lose==false
         {
@@ -401,7 +379,7 @@ class ViewController: UIViewController
         }
     }
     
-    @IBAction func onGoTapped(_ sender: Any)
+    @IBAction func onGoTapped(_ sender: Any) //as long as the player hasnt lost, reset the screen with their inputted number of bombs
     {
         if lose==false
         {
@@ -409,56 +387,8 @@ class ViewController: UIViewController
         }
     }
     
-    func goTapped()
-    {
-        for eachLabel in labels
-        {
-            eachLabel.image = #imageLiteral(resourceName: "newBlank")
-        }
-        toggleButton.image = #imageLiteral(resourceName: "togglePress")
-        toggleState = "press"
-        lose = false
-        if let num = Int(bombInput.text!)
-        {
-            if num>3 && num<13
-            {
-                customNumBombs = num
-            }
-            else
-            {
-                customNumBombs = 4 + rand(lim: 5)
-            }
-        }
-        if customNumBombs==0
-        {
-            customNumBombs = 4 + rand(lim: 5)
-        }
-        bombInput.resignFirstResponder()
-        var row = 0
-        var col = 0
-        for bomb in bombArray
-        {
-            for _ in bomb
-            {
-                bombArray[row][col] = false
-                col += 1
-            }
-            col = 0
-            row += 1
-        }
-        while(customNumBombs>0)
-        {
-            let randSpot = rand(lim: 36)
-            if bombArray[bombRow[numToLabel[randSpot]!]!][bombCol[numToLabel[randSpot]!]!] == false
-            {
-                bombArray[bombRow[numToLabel[randSpot]!]!][bombCol[numToLabel[randSpot]!]!] = true
-                customNumBombs -= 1
-            }
-        }
-        countBombs()
-    }
-    
-    @IBAction func unwindToInitialViewController(segue:UIStoryboardSegue)
+    @IBAction func unwindToInitialViewController(segue:UIStoryboardSegue) //allows player to unwind from win/lose screens back to main playing screen
     {
     }
 }
+
