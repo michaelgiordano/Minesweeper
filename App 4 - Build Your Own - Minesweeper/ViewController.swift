@@ -360,10 +360,12 @@ class ViewController: UIViewController
         var countdown = numBombs
         while countdown>0 //adds 'numBombs' number of bombs to bomb array
         {
-            if !bombArray[rand(lim: 8)][rand(lim: 8)]
+            let row = rand(lim: 8) //random row and col for in the bomb array:
+            let col = rand(lim: 8)
+            if bombArray[row][col] == false //if its not already a bomb
             {
-                bombArray[rand(lim: 8)][rand(lim: 8)] = true
-                countdown -= 1
+                bombArray[row][col] = true //make it a bomb
+                countdown -= 1 //and now we have one less bomb to add
             }
         }
         calcNumberArray()
